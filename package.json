@@ -1,0 +1,14 @@
+{
+  "name": "objectregistry",
+  "version": "1.0.0",
+  "description": "Efficient object registries for JavaScript",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "lexifuzzpup",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
