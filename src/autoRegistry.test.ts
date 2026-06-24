@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AutoRegistry } from "./autoRegistry";
+import { AutoRegistry, RegistryModificationError } from "./autoRegistry";
 
 describe("AutoRegistry", () => {
     it("registers objects and returns a unique key", () => {
@@ -56,6 +56,44 @@ describe("AutoRegistry", () => {
         const notRegistered = "missing";
 
         expect(registry.unregister(notRegistered)).toBe(false);
+    });
+
+    it("locks and unlocks the registry state", () => {
+        const registry = new AutoRegistry<number>();
+        expect(registry.isLocked()).toBe(false);
+
+        registry.lock();
+        expect(registry.isLocked()).toBe(true);
+
+        registry.unlock();
+        expect(registry.isLocked()).toBe(false);
+    });
+
+    it("prevents registering when locked", () => {
+        const registry = new AutoRegistry<string>();
+        registry.lock();
+
+        expect(() => registry.register("blocked")).toThrow(RegistryModificationError);
+        expect(registry.isLocked()).toBe(true);
+    });
+
+    it("prevents unregistering when locked", () => {
+        const registry = new AutoRegistry<string>();
+        const key = registry.register("value");
+        registry.lock();
+
+        expect(() => registry.unregister(key)).toThrow(RegistryModificationError);
+        expect(() => registry.unregister("value")).toThrow(RegistryModificationError);
+    });
+
+    it("allows modifications again after unlock", () => {
+        const registry = new AutoRegistry<string>();
+        registry.lock();
+        registry.unlock();
+
+        const key = registry.register("after unlock");
+        expect(registry.get(key)).toBe("after unlock");
+        expect(registry.unregister(key)).toBe(true);
     });
 
     it("iterates entries, keys, and values excluding removed entries", () => {
