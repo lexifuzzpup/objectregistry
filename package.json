@@ -2,7 +2,7 @@
   "name": "objectregistry",
   "version": "1.0.0",
   "description": "Efficient object registries for JavaScript",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {},
   "keywords": [],
   "author": "lexifuzzpup",
