@@ -1,12 +1,10 @@
+import { RegistryModificationError } from "./errors";
+import type { LockableRegistry, Registry } from "./registry";
+
 export type AutoRegistryKey = Readonly<number>;
 
-export class RegistryModificationError extends Error {
-    constructor(message: string) {
-        super(message);
-    }
-}
-
-export class AutoRegistry<RegistryObject> {
+export class AutoRegistry<RegistryObject>
+implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
     private readonly registeredObjects = new Array<RegistryObject>;
     private nextId: AutoRegistryKey = 0;
     private locked = false;
@@ -77,23 +75,10 @@ export class AutoRegistry<RegistryObject> {
         }
     }
 
-    /**
-     * Gets a registry object by its key, returning it
-     * if found, otherwise a null value.
-     * @param key Object's key to find
-     * @returns The {@link RegistryObject} if found, otherwise null
-     */
     public get(key: AutoRegistryKey): RegistryObject | null {
         return this.registeredObjects[key] || null;
     }
 
-    /**
-     * Tries to find the key associated with a registry
-     * object, returning an {@link AutoRegistryKey}, or
-     * null if not found.
-     * @param object Object instance to find
-     * @returns The key associated with the object
-     */
     public findKey(object: RegistryObject): AutoRegistryKey | null {
         const index = this.registeredObjects.indexOf(object);
         if(index == -1) return null;
@@ -101,44 +86,26 @@ export class AutoRegistry<RegistryObject> {
         return index;
     }
 
-    /**
-     * Returns an iterable of key, object pairs for every entry in the registry
-     */
     public entries(): Iterable<[AutoRegistryKey, RegistryObject]> {
         return this.registeredObjects.entries().filter(([_, object]) => object);
     }
-
-    /**
-     * Returns an iterable of keys in the registry
-     */
+    
     public keys(): Iterable<AutoRegistryKey> {
         return this.registeredObjects.keys().filter((key) => key in this.registeredObjects);
     }
-
-    /**
-     * Returns an iterable of objects in the registry
-     */
+    
     public values(): Iterable<RegistryObject> {
         return this.registeredObjects.values().filter(object => object);
     }
 
-    /**
-     * Locks this registry so no new items can be registered
-     */
     public lock() {
         this.locked = true;
     }
 
-    /**
-     * Unlocks this registry so new items can be registered again
-     */
     public unlock() {
         this.locked = false;
     }
 
-    /**
-     * Checks if the registry is locked
-     */
     public isLocked() {
         return this.locked;
     }

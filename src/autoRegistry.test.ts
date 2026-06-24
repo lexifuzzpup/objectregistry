@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { AutoRegistry, RegistryModificationError } from "./autoRegistry";
+import { AutoRegistry } from "./autoRegistry";
+import { RegistryModificationError } from "./errors";
 
 describe("AutoRegistry", () => {
     it("registers objects and returns a unique key", () => {
