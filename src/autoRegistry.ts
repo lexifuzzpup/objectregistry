@@ -88,23 +88,37 @@ export class AutoRegistry<RegistryObject> {
     }
 
     /**
+     * Tries to find the key associated with a registry
+     * object, returning an {@link AutoRegistryKey}, or
+     * null if not found.
+     * @param object Object instance to find
+     * @returns The key associated with the object
+     */
+    public findKey(object: RegistryObject): AutoRegistryKey | null {
+        const index = this.registeredObjects.indexOf(object);
+        if(index == -1) return null;
+
+        return index;
+    }
+
+    /**
      * Returns an iterable of key, object pairs for every entry in the registry
      */
-    public entries(): Iterator<[AutoRegistryKey, RegistryObject]> {
+    public entries(): Iterable<[AutoRegistryKey, RegistryObject]> {
         return this.registeredObjects.entries().filter(([_, object]) => object);
     }
 
     /**
      * Returns an iterable of keys in the registry
      */
-    public keys(): Iterator<AutoRegistryKey> {
+    public keys(): Iterable<AutoRegistryKey> {
         return this.registeredObjects.keys().filter((key) => key in this.registeredObjects);
     }
 
     /**
      * Returns an iterable of objects in the registry
      */
-    public values(): Iterator<RegistryObject> {
+    public values(): Iterable<RegistryObject> {
         return this.registeredObjects.values().filter(object => object);
     }
 

@@ -21,6 +21,25 @@ describe("AutoRegistry", () => {
         expect(registry.get(key)).toBe(obj);
     });
 
+    it("finds the key for a registered object", () => {
+        const registry = new AutoRegistry<{ name: string }>();
+        const obj1 = { name: "alpha" };
+        const obj2 = { name: "beta" };
+
+        const key1 = registry.register(obj1);
+        registry.register(obj2);
+
+        expect(registry.findKey(obj1)).toBe(key1);
+        expect(registry.findKey(obj2)).toBe(1);
+    });
+
+    it("returns null for findKey when the object is not registered", () => {
+        const registry = new AutoRegistry<{ name: string }>();
+        const obj = { name: "missing" };
+
+        expect(registry.findKey(obj)).toBeNull();
+    });
+
     it("returns null for missing registry keys", () => {
         const registry = new AutoRegistry<number>();
 
