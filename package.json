@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Efficient object registries for JavaScript",
   "main": "src/index.ts",
-  "scripts": {},
+  "scripts": {
+    "test": "vitest run"
+  },
   "keywords": [],
   "author": "lexifuzzpup",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^1.0.0"
   }
 }
