@@ -49,7 +49,7 @@ export class AutoRegistry<RegistryObject> {
             if(index == -1) return false;
 
             // Remove the object at the index found for the registered object
-            this.registeredObjects.splice(index, 1);
+            delete this.registeredObjects[index];
             return true;
         }
     }
