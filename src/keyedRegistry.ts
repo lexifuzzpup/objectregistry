@@ -1,6 +1,8 @@
 import { RegistryModificationError } from "./errors";
+import type { Registry, LockableRegistry } from "./registry";
 
-export class KeyedRegistry<RegistryObject, RegistryKey = string> {
+export class KeyedRegistry<RegistryObject, RegistryKey = string> 
+implements Registry<RegistryObject, RegistryKey>, LockableRegistry {
     private readonly registeredObjects = new Map<RegistryKey, RegistryObject>;
     private readonly registeredObjectsReversed = new Map<RegistryObject, RegistryKey>;
     private locked = false;
