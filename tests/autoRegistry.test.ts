@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AutoRegistry } from "./autoRegistry";
-import { RegistryModificationError } from "./errors";
+import { AutoRegistry, RegistryModificationError } from "../src/autoRegistry";
 
 describe("AutoRegistry", () => {
     it("registers objects and returns a unique key", () => {
@@ -34,7 +33,7 @@ describe("AutoRegistry", () => {
         expect(registry.findKey(obj2)).toBe(1);
     });
 
-    it("returns null for findKey when the object is not registered", () => {
+    it("returns null for findByKey when the object is not registered", () => {
         const registry = new AutoRegistry<{ name: string }>();
         const obj = { name: "missing" };
 

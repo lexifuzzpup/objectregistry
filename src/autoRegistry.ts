@@ -1,5 +1,5 @@
-import { RegistryModificationError } from "./errors";
-import type { LockableRegistry, Registry } from "./registry";
+import { RegistryModificationError } from "./errors.js";
+import type { LockableRegistry, Registry } from "./registry.js";
 
 export type AutoRegistryKey = Readonly<number>;
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { KeyedRegistry } from "./keyedRegistry";
-import { RegistryModificationError } from "./errors";
+import { KeyedRegistry } from "../src/keyedRegistry";
+import { RegistryModificationError } from "../src/errors";
 
 describe("KeyedRegistry", () => {
     it("registers objects and returns the provided key", () => {

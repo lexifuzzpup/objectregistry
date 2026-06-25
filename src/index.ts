@@ -1,3 +1,3 @@
-export * from "./autoRegistry";
-export * from "./keyedRegistry";
-export * from "./errors";
+export * from "./autoRegistry.js";
+export * from "./keyedRegistry.js";
+export * from "./errors.js";

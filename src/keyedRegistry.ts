@@ -1,5 +1,5 @@
-import { RegistryModificationError } from "./errors";
-import type { Registry, LockableRegistry } from "./registry";
+import { RegistryModificationError } from "./errors.js";
+import type { Registry, LockableRegistry } from "./registry.js";
 
 export class KeyedRegistry<RegistryObject, RegistryKey = string> 
 implements Registry<RegistryObject, RegistryKey>, LockableRegistry {
