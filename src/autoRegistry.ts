@@ -61,7 +61,7 @@ implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
             if(!(arg0 in this.registeredObjects)) return false;
 
             // Remove the registered object with the specified id
-            this.registeredObjects.splice(arg0, 1);
+            delete this.registeredObjects[arg0];
             return true;
         
         // RegistryObject

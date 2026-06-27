@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { AutoRegistry, RegistryModificationError } from "../src/autoRegistry";
+import { AutoRegistry, RegistryModificationError } from "../src";
 
 describe("AutoRegistry", () => {
     it("registers objects and returns a unique key", () => {
@@ -121,8 +121,8 @@ describe("AutoRegistry", () => {
         registry.register("second");
         registry.unregister(firstKey);
 
-        expect(Array.from(registry.entries())).toEqual([[0, "second"]]);
-        expect(Array.from(registry.keys())).toEqual([0]);
+        expect(Array.from(registry.entries())).toEqual([[1, "second"]]);
+        expect(Array.from(registry.keys())).toEqual([1]);
         expect(Array.from(registry.values())).toEqual(["second"]);
     });
 
