@@ -6,6 +6,7 @@ export type AutoRegistryKey = Readonly<number>;
 export class AutoRegistry<RegistryObject>
 implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
     private readonly registeredObjects = new Array<RegistryObject>;
+    private readonly registeredObjectsReversed = new Map<RegistryObject, AutoRegistryKey>;
     private nextId: AutoRegistryKey = 0;
     private locked = false;
 
@@ -26,6 +27,7 @@ implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
 
         const id = this.nextId;
         this.registeredObjects[id] = object;
+        this.registeredObjectsReversed.set(object, id);
 
         this.nextId++;
         return id;
@@ -61,6 +63,7 @@ implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
             if(!(arg0 in this.registeredObjects)) return false;
 
             // Remove the registered object with the specified id
+            this.registeredObjectsReversed.delete(this.registeredObjects[arg0]!);
             delete this.registeredObjects[arg0];
             return true;
         
@@ -70,6 +73,7 @@ implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
             if(index == -1) return false;
 
             // Remove the object at the index found for the registered object
+            this.registeredObjectsReversed.delete(arg0);
             delete this.registeredObjects[index];
             return true;
         }
@@ -80,10 +84,7 @@ implements Registry<RegistryObject, AutoRegistryKey>, LockableRegistry {
     }
 
     public findKey(object: RegistryObject): AutoRegistryKey | null {
-        const index = this.registeredObjects.indexOf(object);
-        if(index == -1) return null;
-
-        return index;
+        return this.registeredObjectsReversed.get(object) ?? null;
     }
 
     public entries(): Iterable<[AutoRegistryKey, RegistryObject]> {
